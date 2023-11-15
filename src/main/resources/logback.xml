@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Active JMX -->
+    <jmxConfigurator />
+
+    <!-- appender : définit un objet qui écrit les logs quelque part -->
+    <!-- ici, FileAppender écrit dans un fichier des lignes formattées d'une certaine manière -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/application.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- On peut définir autant d'appenders que nécessaire -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- le logger root : associe par défaut un niveau minimum de logs à un appender (ou plusieurs)  -->
+    <root level="info">
+        <appender-ref ref="FILE" />
+    </root>
+
+    <!-- un autre logger : définit finement quel logger de quel package (et
+       ses packages enfants) utilisent quel niveau et quel(s) appender(s) -->
+    <!-- Attention, de base, les appenders s'additionnent. Ceci peut être annulé
+    avec le paramètre additivity sur le logger -->
+    <logger name="me.heyner" level="trace"  >
+        <appender-ref ref="STDOUT"  >
+        </appender-ref>
+    </logger>
+
+</configuration>
